@@ -60,7 +60,7 @@
     {/if}
   </div>
 {:else} -->
-  <div class="container" role="textbox" tabindex="0" on:keydown={handleKeyDown}>
+  <div style={containerStyle} class="container" role="textbox" tabindex="0" on:keydown={handleKeyDown}>
     <!-- {#if showHours}
       <div class="number-container">
         <div class="number">{time.hour}</div>
