@@ -37,8 +37,8 @@
 
 </script>
 
-<div class="timer-input">
-{#if timeStyle === 'long'}
+<!-- <div class="timer-input"> -->
+<!-- {#if timeStyle === 'long'}
   <div style={containerStyle} class="container" role="textbox" tabindex="0" on:keydown={handleKeyDown}>
     {#if showHours}
       <div style={numberContainerStyle} class="number-container">
@@ -59,28 +59,28 @@
       </div>
     {/if}
   </div>
-{:else}
+{:else} -->
   <div class="container" role="textbox" tabindex="0" on:keydown={handleKeyDown}>
-    {#if showHours}
+    <!-- {#if showHours}
       <div class="number-container">
         <div class="number">{time.hour}</div>
         <div class="postfix">:</div>
       </div>
     {/if}
-    {#if showMinutes}
-      <div class="number-container">
-        <div class="number">{time.minute}</div>
-        <div class="postfix">:</div>
+    {#if showMinutes} -->
+      <div style={numberContainerStyle} class="number-container">
+        <div style={numberStyle} class="number">{time.minute}</div>
+        <div style={postfixStyle} class="postfix">:</div>
       </div>
-    {/if}
-    {#if showSeconds}
-      <div class="number-container">
-        <div class="number">{time.second}</div>
+    <!-- {/if}
+    {#if showSeconds} -->
+      <div style={numberContainerStyle} class="number-container">
+        <div style={numberStyle} class="number">{time.second}</div>
       </div>
-    {/if}
+    <!-- {/if} -->
 </div>
-{/if}
-</div>
+<!-- {/if} -->
+<!-- </div> -->
 
 <style>
   .container {
