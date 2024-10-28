@@ -37,6 +37,7 @@
 
 </script>
 
+<div class="timer-input">
 {#if timeStyle === 'long'}
   <div style={containerStyle} class="container" role="textbox" tabindex="0" on:keydown={handleKeyDown}>
     {#if showHours}
@@ -79,6 +80,7 @@
     {/if}
 </div>
 {/if}
+</div>
 
 <style>
   .container {
