@@ -11,6 +11,85 @@
         "type": "event",
         "key": "timeout",
         "label": "On Timeout"
+      },
+      {
+        "type": "text",
+        "key": "displayTime",
+        "label": "Display Time",
+        "defaultValue": "000000"
+      },
+      {
+        "type": "boolean",
+        "key": "autoStart",
+        "label": "Auto Start",
+        "defaultValue": true
+      },
+      {
+        "type": "text",
+        "key": "cssStyle",
+        "label": "JSON of CSS Style, root level key can be 'container', 'numberContainer', 'number' and 'postfix'",
+        "defaultValue": "{}"
+      },
+      {
+        "type": "boolean",
+        "key": "showControls",
+        "label": "Show Controls",
+        "defaultValue": false
+      },
+      {
+        "type":"boolean",
+        "key": "showHours",
+        "label": "Show Hours",
+        "defaultValue": true
+      },
+      {
+        "type":"boolean",
+        "key": "showMinutes",
+        "label": "Show Minutes",
+        "defaultValue": true
+      },
+      {
+        "type":"boolean",
+        "key": "showSeconds",
+        "label": "Show Seconds",
+        "defaultValue": true
+      },
+      {
+        "type": "text",
+        "key": "hoursLabel",
+        "label": "Hours Label",
+        "dependsOn": {
+          "setting": "showHours",
+          "value": true
+        },
+        "defaultValue": "h"
+      },
+      {
+        "type": "text",
+        "key": "minutesLabel",
+        "label": "Minutes Label",
+        "dependsOn": {
+          "setting": "showMinutes",
+          "value": true
+        },
+        "defaultValue": "m"
+      },
+      {
+        "type": "text",
+        "key": "secondsLabel",
+        "label": "Seconds Label",
+        "dependsOn": {
+          "setting": "showSeconds",
+          "value": true
+        },
+        "defaultValue": "s"
+      },
+      {
+        "type": "select",
+        "key": "timeStyle",
+        "label": "Time Style",
+        "options": ["long", "short"],
+        "defaultValue": "short"
       }
     ]
   }

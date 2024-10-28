@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { tryParse, styleObjectToString } from './utils/otherUtils.js';
   import splitInput from './utils/splitInput.ts';
   import {createEventDispatcher} from "svelte";
 
@@ -7,6 +8,14 @@
     dispatch('change');
   }
 
+  export let showHours
+  export let showMinutes
+  export let showSeconds
+  export let hoursLabel
+  export let minutesLabel
+  export let secondsLabel
+  export let timeStyle
+  export let cssStyle
   export let value = '';
   $: time = splitInput(value);
 
@@ -19,24 +28,57 @@
       value = value.slice(0, -1);
     }
   };
+
+  cssStyle = tryParse(cssStyle);
+  const containerStyle = styleObjectToString(cssStyle.container);
+  const numberContainerStyle = styleObjectToString(cssStyle.numberContainer);
+  const numberStyle = styleObjectToString(cssStyle.number);
+  const postfixStyle = styleObjectToString(cssStyle.postfix);
+
 </script>
 
-<div class="container" role="textbox" tabindex="0" on:keydown={handleKeyDown}>
-  <div class="number-container">
-    <div class="number">{time.hour}</div>
-    <div class="postfix">h</div>
+{#if timeStyle === 'long'}
+  <div style={containerStyle} class="container" role="textbox" tabindex="0" on:keydown={handleKeyDown}>
+    {#if showHours}
+      <div style={numberContainerStyle} class="number-container">
+        <div style={numberStyle} class="number">{time.hour}</div>
+        <div style={postfixStyle} class="postfix">{hoursLabel}</div>
+      </div>
+    {/if}
+    {#if showMinutes}
+      <div style={numberContainerStyle} class="number-container">
+        <div style={numberStyle} class="number">{time.minute}</div>
+        <div style={postfixStyle} class="postfix">{minutesLabel}</div>
+      </div>
+    {/if}
+    {#if showSeconds}
+      <div style={numberContainerStyle} class="number-container">
+        <div style={numberStyle} class="number">{time.second}</div>
+        <div style={postfixStyle} class="postfix">{secondsLabel}</div>
+      </div>
+    {/if}
   </div>
-
-  <div class="number-container">
-    <div class="number">{time.minute}</div>
-    <div class="postfix">m</div>
-  </div>
-
-  <div class="number-container">
-    <div class="number">{time.second}</div>
-    <div class="postfix">s</div>
-  </div>
+{:else}
+  <div class="container" role="textbox" tabindex="0" on:keydown={handleKeyDown}>
+    {#if showHours}
+      <div class="number-container">
+        <div class="number">{time.hour}</div>
+        <div class="postfix">:</div>
+      </div>
+    {/if}
+    {#if showMinutes}
+      <div class="number-container">
+        <div class="number">{time.minute}</div>
+        <div class="postfix">:</div>
+      </div>
+    {/if}
+    {#if showSeconds}
+      <div class="number-container">
+        <div class="number">{time.second}</div>
+      </div>
+    {/if}
 </div>
+{/if}
 
 <style>
   .container {

@@ -4,7 +4,7 @@
   import TimerInput from './components/TimerInput.svelte';
   import splitInput from './components/utils/splitInput';
   import secsToLongTime from './utils/secsToLongTime';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import playSvg from './icons/play.svg';
   import stopSvg from './icons/stop.svg';
   import refreshSvg from './icons/refresh.svg';
@@ -14,10 +14,21 @@
     dispatch('timeout');
   }
 
+  export let displayTime = '000000';
+  export let showControls
+  export let showHours
+  export let showMinutes
+  export let showSeconds
+  export let hoursLabel
+  export let minutesLabel
+  export let secondsLabel
+  export let timeStyle
+  export let cssStyle
+  export let autoStart
+
   let intervalID = 0;
   let timerIsRunning = false;
   let counter = 0;
-  let displayTime = '000000';
 
   let hrs = 0;
   let secs = 0;
@@ -28,6 +39,12 @@
     mins = Number(minute);
     secs = Number(second);
   }
+
+  onMount(() => {
+    if (autoStart) {
+      start();
+    }
+  });
 
   function newDisplayTime(counter: number): string {
     const longTime = secsToLongTime(counter);
@@ -54,11 +71,11 @@
     }
     intervalID = window.setInterval(() => {
       counter = counter - 1;
-      displayTime = newDisplayTime(counter);
       if (counter < 1) {
         stop();
         timeout();
       }
+      displayTime = newDisplayTime(counter);
     }, 1000);
   }
 
@@ -77,21 +94,33 @@
 
 <div class="container">
   <div class="input-container">
-    <TimerInput bind:value={displayTime} />
+    <TimerInput
+      bind:value={displayTime}
+      showHours={showHours}
+      showMinutes={showMinutes}
+      showSeconds={showSeconds}
+      hoursLabel={hoursLabel}
+      minutesLabel={minutesLabel}
+      secondsLabel={secondsLabel}
+      timeStyle={timeStyle}
+      cssStyle={cssStyle}
+    />
   </div>
 
-  <div class="button-container">
-    <TimerButton on:click={handleStartStopClick}>
-      {#if timerIsRunning}
-        <img src={stopSvg} alt="Stop icon" />
-      {:else}
-        <img src={playSvg} alt="Start icon" />
-      {/if}
-    </TimerButton>
-    <TimerButton on:click={reset}>
-      <img src={refreshSvg} alt="Refresh icon" />
-    </TimerButton>
-  </div>
+  {#if showControls}
+    <div class="button-container">
+      <TimerButton on:click={handleStartStopClick}>
+        {#if timerIsRunning}
+          <img src={stopSvg} alt="Stop icon" />
+        {:else}
+          <img src={playSvg} alt="Start icon" />
+        {/if}
+      </TimerButton>
+      <TimerButton on:click={reset}>
+        <img src={refreshSvg} alt="Refresh icon" />
+      </TimerButton>
+    </div>
+  {/if}
 </div>
 
 <style>
